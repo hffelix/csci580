@@ -4,7 +4,8 @@
 #include <string.h>
 #include "stdio.h"
 #include "math.h"
-#include "GL/glut.h"
+#include "../freeglut/include/GL/glut.h"
+#include "FileReader.h"
 
 #if !defined(GLUT_WHEEL_UP)
 #  define GLUT_WHEEL_UP   3
@@ -91,9 +92,9 @@ GLvoid vMarchCube1(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fScale);
 GLvoid(*vMarchCube)(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fScale) = vMarchCube1;
 
 //
-#define NX 200	
-#define NY 160
-#define NZ 160
+#define NX 256	
+#define NY 256
+#define NZ 256
 //
 //#define NX 48	
 //#define NY 62
@@ -121,7 +122,7 @@ void main(int argc, char **argv)
 	FILE *fptr;
 	argc = 2;
 
-	argv[1] = "F:\\Èí¼þ\\OpenGL\\mri.raw";
+	argv[1] = "../foot.raw/foot.raw";
 
 	for (i = 1; i<argc; i++) {
 		if (strcmp(argv[i], "-i") == 0)
@@ -138,6 +139,7 @@ void main(int argc, char **argv)
 
 	// Open and read the raw data
 	fprintf(stderr, "Reading data ...\n");
+	/*
 	if ((fptr = fopen(argv[argc - 1], "rb")) == NULL) {
 		fprintf(stderr, "File open failed\n");
 		exit(-1);
@@ -158,7 +160,13 @@ void main(int argc, char **argv)
 			}
 		}
 	}
-	fclose(fptr);
+	fclose(fptr);*/
+	FileReader* fr = new FileReader(data);
+	fr->readFile(argv[1]);
+	themax = fr->color_max;
+	themin = fr->color_min;
+
+
 	fprintf(stderr, "Volumetric data range: %d -> %d\n", themin, themax);
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
