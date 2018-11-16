@@ -1,0 +1,5 @@
+csci580/Debug/**
+csci580/*.db
+csci580/*.opendb
+csci580/csci580/*.vcxproj
+csci580/ipch/**
