@@ -20,11 +20,12 @@
 
 //定义窗口按键- xuanshao -11/18/2018
 
-int menu, subMenu1, subMenu2,subMenu3;
+int menu, subMenu1, subMenu2, subMenu3, subMenu4;
 void SubMenuFunc1(int data);
 void MenuFunc(int data);
 void SubMenuFunc2(int data);
 void SubMenuFunc3(int data);
+void SubMenuFunc4(int data);
 
 //向量
 struct GLvector
@@ -80,6 +81,11 @@ static const GLfloat afSpecularBlue[] = { 0.25, 0.25, 1.00, 1.00 };   // 反射 蓝
 GLenum    ePolygonMode = GL_FILL;
 
 GLfloat   fTargetValue = 100.0;
+
+GLboolean useRGB = true;
+GLboolean useTranslucent = true;
+GLfloat   alpha = 1.0F;
+
 GLfloat   fTime = 0.0;
 GLvector  sSourcePoint[3];
 GLboolean bLight = true;
@@ -155,24 +161,24 @@ void main(int argc, char **argv)
 	fprintf(stderr, "Reading data ...\n");
 	/*
 	if ((fptr = fopen(argv[argc - 1], "rb")) == NULL) {
-		fprintf(stderr, "File open failed\n");
-		exit(-1);
+	fprintf(stderr, "File open failed\n");
+	exit(-1);
 	}
 	for (k = 0; k<NZ; k++) {
-		for (j = 0; j<NY; j++) {
-			for (i = 0; i<NX; i++) {
-				if ((c = fgetc(fptr)) == EOF) {
-					fprintf(stderr, "Unexpected end of file\n");
-					exit(-1);
-				}
-				data[i][j][k] = c;
+	for (j = 0; j<NY; j++) {
+	for (i = 0; i<NX; i++) {
+	if ((c = fgetc(fptr)) == EOF) {
+	fprintf(stderr, "Unexpected end of file\n");
+	exit(-1);
+	}
+	data[i][j][k] = c;
 
-				if (c > themax)
-					themax = c;
-				if (c < themin)
-					themin = c;
-			}
-		}
+	if (c > themax)
+	themax = c;
+	if (c < themin)
+	themin = c;
+	}
+	}
 	}
 	fclose(fptr);*/
 	FileReader* fr = new FileReader(data);
@@ -191,7 +197,7 @@ void main(int argc, char **argv)
 	GLsizei iWidth = 640.0;
 	GLsizei iHeight = 480.0;
 
-
+	//initial window
 	Windows view;
 	view.CreateView();
 	fTargetValue = view.Getvalue();
@@ -202,6 +208,11 @@ void main(int argc, char **argv)
 	glutInitWindowSize(iWidth, iHeight);
 	glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
 	glutCreateWindow("Marching Cubes");
+
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_BLEND);
+	glClearColor(0.0F, 0.0F, 0.0F, 0.0F);
+
 	glutDisplayFunc(vDrawScene);
 	glutIdleFunc(vIdle);
 	glutReshapeFunc(vResize);
@@ -216,10 +227,10 @@ void main(int argc, char **argv)
 	glutAddMenuEntry("red", 3);
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 	/*创建子菜单2并加入菜单条目*/
-	 subMenu2 = glutCreateMenu(SubMenuFunc2);
-	 glutAddMenuEntry("blue", 1);
-	 glutAddMenuEntry("white", 2);
-	 glutAddMenuEntry("red", 3);
+	subMenu2 = glutCreateMenu(SubMenuFunc2);
+	glutAddMenuEntry("blue", 1);
+	glutAddMenuEntry("white", 2);
+	glutAddMenuEntry("red", 3);
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 
 	/*创建子菜单3并加入菜单条目*/
@@ -227,6 +238,12 @@ void main(int argc, char **argv)
 	glutAddMenuEntry("blue", 1);
 	glutAddMenuEntry("white", 2);
 	glutAddMenuEntry("red", 3);
+	glutAttachMenu(GLUT_RIGHT_BUTTON);
+
+	/*创建子菜单3并加入菜单条目*/
+	subMenu4 = glutCreateMenu(SubMenuFunc4);
+	glutAddMenuEntry("use gray scale", 1);
+	glutAddMenuEntry("use RGB", 2);
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 
 	/*创建主菜单并加入菜单条目及子菜单*/
@@ -237,11 +254,12 @@ void main(int argc, char **argv)
 	glutAddSubMenu("Diffuse Color", subMenu1);
 	glutAddSubMenu("Ambient", subMenu2);
 	glutAddSubMenu("Specular", subMenu3);
+	glutAddSubMenu("display color", subMenu4);
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 
 	//END openGL 添加 右键菜单 -xuanshao -11/18/2018
 
-	glClearColor(0.0, 0.0, 0.0, 1.0);
+	//glClearColor(0.0, 0.0, 0.0, 1.0);
 	glClearDepth(1.0);
 
 	glEnable(GL_DEPTH_TEST);
@@ -274,7 +292,7 @@ void main(int argc, char **argv)
 
 GLvoid vPrintHelp()
 {
-	printf("Marching Cubes Rountines by Niu Kenan (niukenan@sina.com)\n\n");
+	printf("Marching Cubes for CSCI580\n\n");
 }
 
 // 窗口改变响应
@@ -438,7 +456,7 @@ void vSpecial(int iKey, int iX, int iY)
 
 
 	//键盘 上下左右 控制              
-	
+
 	case GLUT_KEY_UP:    // 上
 	{
 		Ytranform += 10.0;
@@ -470,7 +488,7 @@ void vSpecial(int iKey, int iX, int iY)
 void vIdle()//   程序空闲时
 {
 	// 重绘函数
-	glutPostRedisplay();
+	//glutPostRedisplay();
 
 }
 
@@ -478,10 +496,25 @@ void vIdle()//   程序空闲时
 
 void vDrawScene() // 绘制场景
 {
+	if (!useRGB || useTranslucent)
+	{
+		glDisable(GL_LIGHTING);
+	}
+	else
+	{
+		glEnable(GL_LIGHTING);
+	}
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glPushMatrix();
+
+	if (useTranslucent)
+	{
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glEnable(GL_BLEND);
+		glClearColor(0.0F, 0.0F, 0.0F, 1.0F);
+	}
 
 
 	glTranslatef(Xtranform, Ytranform, Ztranform);
@@ -576,6 +609,38 @@ GLvoid vGetNormal(GLvector &rfNormal, GLfloat fX, GLfloat fY, GLfloat fZ)       
 	}
 }
 
+
+
+GLfloat vRGB2GrayScale(GLvector& colour)
+{
+	return colour.fX * 0.2126F + colour.fY * 0.7152F + colour.fZ * 0.0722F;
+}
+
+GLvoid vChooseColor(GLvector colour)
+{
+	GLvector res;
+	if (useRGB)
+	{
+		res = colour;
+	}
+	else
+	{
+		GLfloat gray_scale = vRGB2GrayScale(colour);
+		res.fX = gray_scale;
+		res.fY = gray_scale;
+		res.fZ = gray_scale;
+	}
+
+	if (useTranslucent)
+	{
+		glColor4f(res.fX, res.fY, res.fZ, alpha);
+	}
+	else
+	{
+		glColor3f(res.fX, res.fY, res.fZ);
+	}
+}
+
 //vMarchCube1 performs the Marching Cubes algorithm on a single cube
 GLvoid vMarchCube1(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fScale)                   // Marching Cubes 算法对于一个 单个立方体
 {
@@ -592,7 +657,7 @@ GLvoid vMarchCube1(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fScale)          
 	//Make a local copy of the values at the cube's corners  保存 每一个Cube的八个顶点。		
 	for (iVertex = 0; iVertex < 8; iVertex++)
 	{
-		afCubeValue[iVertex] = (GLfloat)data[(int)(fX + a2fVertexOffset[iVertex][0])] [(int)(fY + a2fVertexOffset[iVertex][1])] [(int)(fZ + a2fVertexOffset[iVertex][2])];
+		afCubeValue[iVertex] = (GLfloat)data[(int)(fX + a2fVertexOffset[iVertex][0])][(int)(fY + a2fVertexOffset[iVertex][1])][(int)(fZ + a2fVertexOffset[iVertex][2])];
 	}
 
 	//Find which vertices are inside of the surface and which are outside   找出哪些顶点是在等值面内，哪些是在等值面外
@@ -643,6 +708,12 @@ GLvoid vMarchCube1(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fScale)          
 
 			vGetColor(sColor, asEdgeVertex[iVertex], asEdgeNorm[iVertex]);
 			glColor3f(sColor.fX, sColor.fY, sColor.fZ);
+
+			//glDisable(GL_LIGHTING);
+			//GLfloat gray_scale = vRGB2GrayScale(sColor);
+			//glColor3f(gray_scale, gray_scale, gray_scale);
+
+			vChooseColor(sColor);
 			glNormal3f(asEdgeNorm[iVertex].fX, asEdgeNorm[iVertex].fY, asEdgeNorm[iVertex].fZ);
 			glVertex3f(asEdgeVertex[iVertex].fX, asEdgeVertex[iVertex].fY, asEdgeVertex[iVertex].fZ);
 		}
@@ -653,6 +724,8 @@ GLvoid vMarchCube1(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fScale)          
 GLvoid vMarchingCubes()
 {
 	GLint iX, iY, iZ;
+	alpha = 1.0F;
+	fTargetValue = 100; //get input from the first input window
 	for (iX = 0; iX < NX - 1; iX++)
 		for (iY = 0; iY < NY - 1; iY++)
 			for (iZ = 0; iZ < NZ - 1; iZ++)
@@ -660,6 +733,20 @@ GLvoid vMarchingCubes()
 				vMarchCube(iX, iY, iZ, 1);
 			}
 	printf("finish one Draw ! !\n");
+
+	if (useTranslucent)
+	{
+		alpha = 0.13F;
+		fTargetValue = 20; //get input from the second input window
+		useTranslucent = true;
+		for (iX = 0; iX < NX - 1; iX++)
+			for (iY = 0; iY < NY - 1; iY++)
+				for (iZ = 0; iZ < NZ - 1; iZ++)
+				{
+					vMarchCube(iX, iY, iZ, 1);
+				}
+		printf("finish one Draw ! !\n");
+	}
 }
 
 // For any edge, if one vertex is inside of the surface and the other is outside of the surface
@@ -953,7 +1040,7 @@ GLint a2iTriangleConnectionTable[256][16] =
 	{ 0, 9, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 },
 	{ 0, 3, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 },
 	{ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 }
-}; 
+};
 
 //菜单按键控件- xuanshao -11/18/2018
 
@@ -1041,6 +1128,30 @@ void SubMenuFunc3(int data)
 		break;
 	}
 }
+
+/*子菜单3*/
+void SubMenuFunc4(int data)
+{
+	GetCurrentMenu();
+	switch (data)
+	{
+	case 1:
+		printf("SubMenu3's item 1 is triggered.\n");
+		useRGB = false;
+		//glMaterialfv(GL_FRONT, GL_SPECULAR, afSpecularBlue);
+		vDrawScene();
+		break;
+	case 2:
+		printf("SubMenu3's item 2 is triggered.\n");
+		useRGB = true;
+		//glMaterialfv(GL_FRONT, GL_SPECULAR, afSpecularWhite);
+		vDrawScene();
+		break;
+	default:
+		break;
+	}
+}
+
 /*主菜单*/
 void MenuFunc(int data)
 {
