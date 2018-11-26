@@ -1,24 +1,25 @@
-﻿  FileReader.cpp
-  csci580.cpp
-d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(129): warning C4244: '=': conversion from 'double' to 'short', possible loss of data
-d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(177): warning C4244: 'initializing': conversion from 'double' to 'GLsizei', possible loss of data
-d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(178): warning C4244: 'initializing': conversion from 'double' to 'GLsizei', possible loss of data
-d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(119): warning C4101: 'k': unreferenced local variable
-d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(122): warning C4101: 'fptr': unreferenced local variable
-d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(119): warning C4101: 'c': unreferenced local variable
-d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(231): warning C4305: 'initializing': truncation from 'double' to 'GLfloat'
-d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(256): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(258): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(263): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(265): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(288): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(293): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(473): warning C4244: 'return': conversion from 'GLdouble' to 'GLfloat', possible loss of data
-d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(482): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(483): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(484): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(504): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(608): warning C4244: 'argument': conversion from 'GLint' to 'GLfloat', possible loss of data
-  Generating Code...
+﻿  csci580.cpp
+d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\windows.h(3): warning C4005: 'WIN32_LEAN_AND_MEAN': macro redefinition
+  d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\freeglut\include\gl\freeglut_std.h(58): note: see previous definition of 'WIN32_LEAN_AND_MEAN'
+d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(143): warning C4244: '=': conversion from 'double' to 'short', possible loss of data
+d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(191): warning C4244: 'initializing': conversion from 'double' to 'GLsizei', possible loss of data
+d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(192): warning C4244: 'initializing': conversion from 'double' to 'GLsizei', possible loss of data
+d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(197): warning C4244: '=': conversion from 'int' to 'GLfloat', possible loss of data
+d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(133): warning C4101: 'k': unreferenced local variable
+d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(136): warning C4101: 'fptr': unreferenced local variable
+d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(133): warning C4101: 'c': unreferenced local variable
+d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(283): warning C4305: 'initializing': truncation from 'double' to 'GLfloat'
+d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(308): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(310): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(315): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(317): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(340): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(345): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(525): warning C4244: 'return': conversion from 'GLdouble' to 'GLfloat', possible loss of data
+d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(534): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(535): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(536): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(556): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+d:\projects\研究生\3d绘图渲染\作业\hw7\csci580\csci580\csci580\csci580.cpp(660): warning C4244: 'argument': conversion from 'GLint' to 'GLfloat', possible loss of data
   csci580.vcxproj -> D:\projects\研究生\3D绘图渲染\作业\HW7\csci580\csci580\Debug\csci580.exe
   csci580.vcxproj -> D:\projects\研究生\3D绘图渲染\作业\HW7\csci580\csci580\Debug\csci580.pdb (Full PDB)

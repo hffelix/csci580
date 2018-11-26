@@ -6,6 +6,12 @@
 #include "math.h"
 #include "../freeglut/include/GL/glut.h"
 #include "FileReader.h"
+#include "windows.h"
+
+#ifdef _MSC_VER
+#pragma comment(linker, "/subsystem:windows /ENTRY:mainCRTStartup")
+#endif
+
 
 #if !defined(GLUT_WHEEL_UP)
 #  define GLUT_WHEEL_UP   3
@@ -184,6 +190,12 @@ void main(int argc, char **argv)
 
 	GLsizei iWidth = 640.0;
 	GLsizei iHeight = 480.0;
+
+
+	Windows view;
+	view.CreateView();
+	fTargetValue = view.Getvalue();
+
 
 	glutInit(&argc, argv);
 	glutInitWindowPosition(0, 0);
@@ -458,7 +470,7 @@ void vSpecial(int iKey, int iX, int iY)
 void vIdle()//   程序空闲时
 {
 	// 重绘函数
-	//glutPostRedisplay();
+	glutPostRedisplay();
 
 }
 
