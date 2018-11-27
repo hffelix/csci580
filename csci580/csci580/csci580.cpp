@@ -81,9 +81,10 @@ static const GLfloat afSpecularBlue[] = { 0.25, 0.25, 1.00, 1.00 };   // ∑¥…‰ ¿∂
 GLenum    ePolygonMode = GL_FILL;
 
 GLfloat   fTargetValue = 100.0;
+GLfloat   fTargetValue2 = 20.0F;
 
-GLboolean useRGB = true;
-GLboolean useTranslucent = true;
+GLboolean useRGB = false;//
+GLboolean useTranslucent = false;
 GLfloat   alpha = 1.0F;
 
 GLfloat   fTime = 0.0;
@@ -201,6 +202,9 @@ void main(int argc, char **argv)
 	Windows view;
 	view.CreateView();
 	fTargetValue = view.Getvalue();
+	fTargetValue2 = view.Getvalue2();
+	useRGB = view.Gettemp1();
+	useTranslucent = view.Gettemp2();
 
 
 	glutInit(&argc, argv);

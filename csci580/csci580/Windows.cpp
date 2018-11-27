@@ -2,31 +2,56 @@
 #include "Windows.h"
 #include <stdio.h>
 #include <stdlib.h>
-HWND textfield,button,TextBox;
+HWND textfield,button,TextBox,TextBox2,button2,textfield2;
 char szClassName[] = "TextEntry";
 char numberEntered[20];
-int ftagerget;
+char numberEntered2[20];
+int ftagerget,ftagerget2;
+bool temp1,temp2;
 void Setvalue1(char * a)
 {
 	ftagerget = atoi(a);
 }
+void Setvalue2(char * a)
+{
+	ftagerget2 = atoi(a);
+}
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) {
 	switch (message) {
 	case WM_CREATE:
-		textfield =CreateWindow(L"STATIC", L"ENTER TARGET VALUE:", WS_VISIBLE | WS_CHILD, 15, 20, 170, 30, hwnd, NULL, NULL, NULL);
-		button= CreateWindow(L"BUTTON", L"SUBMIT", WS_VISIBLE | WS_CHILD|WS_BORDER, 80, 125, 70, 50, hwnd, (HMENU) 1, NULL, NULL);
+		textfield =CreateWindow(L"STATIC", L"INSIDE LAYER VALUE:", WS_VISIBLE | WS_CHILD, 15, 20, 170, 30, hwnd, NULL, NULL, NULL);
+		textfield2 = CreateWindow(L"STATIC", L"OUTSIDE LAYER VALUE:", WS_VISIBLE | WS_CHILD, 15, 120, 170, 30, hwnd, NULL, NULL, NULL);
+		button= CreateWindow(L"BUTTON", L"1 LAYER", WS_VISIBLE | WS_CHILD|WS_BORDER, 90, 60, 70, 50, hwnd, (HMENU) 1, NULL, NULL);
+		button2 = CreateWindow(L"BUTTON", L"2 LAYERS", WS_VISIBLE | WS_CHILD | WS_BORDER, 90, 165, 70, 50, hwnd, (HMENU)2, NULL, NULL);
 		TextBox= CreateWindow(L"EDIT", L"", WS_VISIBLE | WS_CHILD | WS_BORDER, 190, 20, 30, 30, hwnd, NULL, NULL, NULL); 
+		TextBox2 = CreateWindow(L"EDIT", L"", WS_VISIBLE | WS_CHILD | WS_BORDER, 190, 120, 30, 30, hwnd, NULL, NULL, NULL);
 		break;
 	case WM_COMMAND:
 		switch (LOWORD(wParam)) {
 		case 1:
+		{
 			int gwtstat = 0;
 			gwtstat = GetWindowTextA(TextBox, numberEntered, 20);
+			gwtstat = GetWindowTextA(TextBox2, numberEntered2, 20);
 			//::MessageBeep(MB_ICONERROR);		FOR DEBUG
 			//::MessageBoxA(hwnd, numberEntered, numberEntered, NULL);// FOR DEBUG
 			Setvalue1(numberEntered);
+			Setvalue2(numberEntered2);
+			temp1 = true; temp2 = false;
 			DestroyWindow(hwnd);
-			break;
+			break;}
+		case 2:
+		{
+			int gwtstat = 0;
+			gwtstat = GetWindowTextA(TextBox, numberEntered, 20);
+			gwtstat = GetWindowTextA(TextBox2, numberEntered2, 20);
+			//::MessageBeep(MB_ICONERROR);		FOR DEBUG
+			//::MessageBoxA(hwnd, numberEntered, numberEntered, NULL);// FOR DEBUG
+			Setvalue1(numberEntered);
+			Setvalue2(numberEntered2);
+			temp1 = false; temp2 = true;
+			DestroyWindow(hwnd);
+			break;}
 		}
 		break;
 	case WM_CLOSE:
@@ -52,6 +77,21 @@ void Windows::CreateView() {
 int Windows::Getvalue()
 {
 	return ftagerget;
+}
+
+int Windows::Getvalue2()
+{
+	return ftagerget2;
+}
+
+bool Windows::Gettemp1()
+{
+	return temp1;
+}
+
+bool Windows::Gettemp2()
+{
+	return temp2;
 }
 
 
