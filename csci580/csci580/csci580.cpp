@@ -12,14 +12,6 @@
 #  define GLUT_WHEEL_DOWN 4
 #endif
 
-//定义窗口按键- xuanshao -11/18/2018
-
-int menu, subMenu1, subMenu2,subMenu3;
-void SubMenuFunc1(int data);
-void MenuFunc(int data);
-void SubMenuFunc2(int data);
-void SubMenuFunc3(int data);
-
 //向量
 struct GLvector
 {
@@ -196,38 +188,6 @@ void main(int argc, char **argv)
 	glutKeyboardFunc(vKeyboard);
 	glutSpecialFunc(vSpecial);
 	glutMouseFunc(myMouseCall);
-	//openGL 添加 右键菜单 -xuanshao -11/18/2018
-
-	subMenu1 = glutCreateMenu(SubMenuFunc1);
-	glutAddMenuEntry("blue", 1);
-	glutAddMenuEntry("white", 2);
-	glutAddMenuEntry("red", 3);
-	glutAttachMenu(GLUT_RIGHT_BUTTON);
-	/*创建子菜单2并加入菜单条目*/
-	 subMenu2 = glutCreateMenu(SubMenuFunc2);
-	 glutAddMenuEntry("blue", 1);
-	 glutAddMenuEntry("white", 2);
-	 glutAddMenuEntry("red", 3);
-	glutAttachMenu(GLUT_RIGHT_BUTTON);
-
-	/*创建子菜单3并加入菜单条目*/
-	subMenu3 = glutCreateMenu(SubMenuFunc3);
-	glutAddMenuEntry("blue", 1);
-	glutAddMenuEntry("white", 2);
-	glutAddMenuEntry("red", 3);
-	glutAttachMenu(GLUT_RIGHT_BUTTON);
-
-	/*创建主菜单并加入菜单条目及子菜单*/
-	menu = glutCreateMenu(MenuFunc);
-	//glutAddMenuEntry("Item1", 1);
-	//glutAddMenuEntry("Item2", 2);
-	//glutAddMenuEntry("Item3", 3);
-	glutAddSubMenu("Diffuse Color", subMenu1);
-	glutAddSubMenu("Ambient", subMenu2);
-	glutAddSubMenu("Specular", subMenu3);
-	glutAttachMenu(GLUT_RIGHT_BUTTON);
-
-	//END openGL 添加 右键菜单 -xuanshao -11/18/2018
 
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glClearDepth(1.0);
@@ -942,107 +902,3 @@ GLint a2iTriangleConnectionTable[256][16] =
 	{ 0, 3, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 },
 	{ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 }
 }; 
-
-//菜单按键控件- xuanshao -11/18/2018
-
-/*写出当前是哪个菜单*/
-void GetCurrentMenu(void)
-{
-	int nMenu;
-	nMenu = glutGetMenu();
-	if (nMenu == menu)
-		printf("The current menu is Main Menu.\n");
-	if (nMenu == subMenu1)
-		printf("The current menu is SubMenu1.\n");
-	if (nMenu == subMenu2)
-		printf("The current menu is SubMenu2.\n");
-}
-
-/*子菜单1*/
-void SubMenuFunc1(int data)
-{
-	GetCurrentMenu();
-	switch (data)
-	{
-	case 1:
-		printf("SubMenu1's item 1 is triggered.\n");
-		glMaterialfv(GL_FRONT, GL_DIFFUSE, afDiffuseBlue);
-		vDrawScene();
-		break;
-	case 2:
-		printf("SubMenu1's item 2 is triggered.\n");
-		glMaterialfv(GL_FRONT, GL_DIFFUSE, afDiffuseWhite);
-		vDrawScene();
-		break;
-	case 3:
-		printf("SubMenu1's item 3 is triggered.\n");
-		glMaterialfv(GL_FRONT, GL_DIFFUSE, afDiffuseRed);
-		vDrawScene();
-		break;
-	}
-}
-
-/*子菜单2*/
-void SubMenuFunc2(int data)
-{
-	GetCurrentMenu();
-	switch (data)
-	{
-	case 1:
-		printf("SubMenu2's item 1 is triggered.\n");
-		glMaterialfv(GL_FRONT, GL_AMBIENT, afAmbientBlue);
-		vDrawScene();
-		break;
-	case 2:
-		printf("SubMenu2's item 2 is triggered.\n");
-		glMaterialfv(GL_FRONT, GL_AMBIENT, afAmbientWhite);
-		vDrawScene();
-		break;
-	case 3:
-		printf("SubMenu2's item 3 is triggered.\n");
-		glMaterialfv(GL_FRONT, GL_AMBIENT, afAmbientRed);
-		vDrawScene();
-		break;
-	}
-}
-
-/*子菜单3*/
-void SubMenuFunc3(int data)
-{
-	GetCurrentMenu();
-	switch (data)
-	{
-	case 1:
-		printf("SubMenu3's item 1 is triggered.\n");
-		glMaterialfv(GL_FRONT, GL_SPECULAR, afSpecularBlue);
-		vDrawScene();
-		break;
-	case 2:
-		printf("SubMenu3's item 2 is triggered.\n");
-		glMaterialfv(GL_FRONT, GL_SPECULAR, afSpecularWhite);
-		vDrawScene();
-		break;
-	case 3:
-		printf("SubMenu3's item 3 is triggered.\n");
-		glMaterialfv(GL_FRONT, GL_SPECULAR, afSpecularRed);
-		vDrawScene();
-		break;
-	}
-}
-/*主菜单*/
-void MenuFunc(int data)
-{
-	GetCurrentMenu();
-	switch (data)
-	{
-	case 1:
-		printf("MainMenu's item 1 is triggered.\n");
-		break;
-	case 2:
-		printf("MainMenu's item 2 is triggered.\n");
-		break;
-	case 3:
-		printf("MainMenu's item 3 is triggered.\n");
-		break;
-	}
-}
